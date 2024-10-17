@@ -1,30 +1,27 @@
-# Terraform을 이용한 AWS 인프라 구축 🚀
+# Terraform을 이용한 AWS 인프라 구축 ⚓️
 
 ## 개요 📄
 
-본 프로젝트는 Terraform을 사용하여 AWS 인프라를 자동으로 구축하는 과정을 다룹니다. 서브넷, 라우팅 테이블, 게이트웨이 등을 생성하고, 퍼블릭 및 프라이빗 라우트 테이블을 설정하여 효율적이고 안전한 네트워크 구성을 구현합니다.
+Terraform을 사용하여 AWS 인프라를 자동으로 구축하는 과정을 다룹니다. 서브넷, 라우팅 테이블, 게이트웨이 등을 생성하고, 퍼블릭 및 프라이빗 라우트 테이블을 설정하여 효율적이고 안전한 네트워크 구성을 구현합니다.
 
-## 팀원 👥
+## 팀원 🚅
 
 |<img src="https://avatars.githubusercontent.com/u/64997345?v=4" width="120" height="120"/>|<img src="https://avatars.githubusercontent.com/u/38968449?v=4" width="120" height="120"/>
 |:-:|:-:|
 |[@최영하](https://github.com/ChoiYoungha)|[@허예은](https://github.com/yyyeun)
 
+<br>
+
 ## 학습 목표 🎯
+IaC 도구 Terraform을 이용하여 코드를 통해 AWS 리소스를 제어합니다. IAM 역할 및 정책을 설정하고, VPC, 서브넷, 라우팅 테이블, 게이트웨이 등 인프라 구성을 목표로 합니다.
 
-- Terraform을 이용한 AWS 리소스 자동화 이해
-- VPC, 서브넷, 라우팅 테이블, 게이트웨이 등의 네트워크 구성 요소 학습
-- IAM 역할 및 정책 관리 방법 습득
-- 인프라 코드 작성 및 관리 능력 향상
+<br>
 
-## 주요 개념 설명 💡
+## 작업설명 💡
 
-- **VPC (Virtual Private Cloud)**: AWS 클라우드 내에 논리적으로 격리된 네트워크를 생성.
-- **서브넷 (Subnet)**: VPC 내에서 IP 주소 범위를 나누어 리소스를 배치.
-- **라우팅 테이블 (Route Table)**: 트래픽의 흐름을 제어하는 규칙 집합.
-- **인터넷 게이트웨이 (Internet Gateway)**: VPC와 인터넷 간의 트래픽을 허용.
-- **NAT 게이트웨이 (NAT Gateway)**: 프라이빗 서브넷에서 인터넷으로의 아웃바운드 트래픽을 관리.
-- **IAM 역할 및 정책 (IAM Role & Policy)**: AWS 리소스에 대한 접근 권한을 정의하고 관리.
+ubuntu 환경에서 aws cli를 사용하여 Terraform 코드를 작성하고, 명령어를 순차적으로 실행하여 AWS 리소스를 컨트롤합니다.
+
+<br>
 
 ## 사전 작업 🛠️
 
@@ -46,6 +43,8 @@ apt-get update && apt-get install terraform -y
 terraform -version
 ```
 
+
+
 ### 2. AWS CLI 설치
 
 ```bash
@@ -58,9 +57,10 @@ sudo ./aws/install
 aws --version
 ```
 
+
 ## 작업 프로세스 📝
 
-### 1. 역할과 정책 생성 후 연결 (`s3_iam_role.tf`)
+### 1. 🔐 역할과 정책 생성 후 연결 (`s3_iam_role.tf`)
 
 
 ```hcl
@@ -110,7 +110,9 @@ resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
 }
 ```
 
-### 2. VPC 생성 (`create_vpc.tf`)
+
+
+### 2. 🌐 VPC 생성 (`create_vpc.tf`)
 
 
 ```hcl
@@ -129,7 +131,9 @@ resource "aws_vpc" "vpc" {
 }
 ```
 
-### 3. Web 서브넷 생성 (`web-subnets.tf`)
+
+
+### 3. 🕸️ Web 서브넷 생성 (`web-subnets.tf`)
 
 
 ```hcl
@@ -172,7 +176,9 @@ resource "aws_subnet" "web-subnet2" {
 }
 ```
 
-### 4. 프라이빗 Web 서브넷 생성 (`app-subnets.tf`)
+
+
+### 4. 🔒 프라이빗 Web 서브넷 생성 (`app-subnets.tf`)
 
 
 ```hcl
@@ -214,7 +220,9 @@ resource "aws_subnet" "app-subnet2" {
 }
 ```
 
-### 5. 인터넷 게이트웨이 생성 (`internet-gw.tf`)
+
+
+### 5. 🎢 인터넷 게이트웨이 생성 (`internet-gw.tf`)
 
 ```hcl
 # 인터넷 게이트웨이 생성
@@ -227,7 +235,9 @@ resource "aws_internet_gateway" "internet-gw" {
 }
 ```
 
-### 6. NAT 생성을 위한 Elastic IP 생성 (`eip.tf`)
+
+
+### 6. 📡 NAT 생성을 위한 Elastic IP 생성 (`eip.tf`)
 
 
 ```hcl
@@ -241,7 +251,9 @@ resource "aws_eip" "eip" {
 }
 ```
 
-### 7. NAT 게이트웨이 생성 (`nat-gw.tf`)
+
+
+### 7. 🌐NAT 게이트웨이 생성 (`nat-gw.tf`)
 
 
 ```hcl
@@ -259,7 +271,9 @@ resource "aws_nat_gateway" "nat-gw" {
 }
 ```
 
-### 8. 퍼블릭 라우트 테이블 생성 (`public-rt.tf`)
+
+
+### 8. 🛤️ 퍼블릭 라우트 테이블 생성 (`public-rt.tf`)
 
 
 ```hcl
@@ -290,7 +304,7 @@ resource "aws_route_table_association" "pub-rt-association-2" {
 }
 ```
 
-### 9. 프라이빗 라우트 테이블 생성 (`private-rt.tf`)
+### 9. 🛡️ 프라이빗 라우트 테이블 생성 (`private-rt.tf`)
 
 
 ```hcl
@@ -321,6 +335,7 @@ resource "aws_route_table_association" "pri-rt-association-2" {
 }
 ```
 
+
 ## 공통 명령어 📟
 
 ```bash
@@ -329,16 +344,21 @@ terraform plan
 terraform apply -auto-approve
 ```
 
+
+
 ## 결과 🎉
 ![2024-10-17 12 09 44](https://github.com/user-attachments/assets/2cc614fb-bdc7-4d16-a8a7-3c0953af5b9c)
 
 
+
 ## 자원 삭제 🗑️
 
-테스트로 생성한 AWS 리소스를 지우고 비용을 절약합니다.
 ```bash
 terraform destroy -auto-approve
 ```
+테스트로 생성한 AWS 리소스를 지우고 비용을 절약합니다.
+
+
 
 ## 결론 및 고찰 📝
 
